@@ -125,8 +125,8 @@ function init_terabank_installments_class()
 						array(
 							'Code' => $product->get_id(),
 							'Name' => $product->get_name(),
-							'Amount' => $product->get_price() + (round($product->get_price() * $this->handling_fee / 100, 2)),
-							'CashAmount' => $product->get_price(),
+							'Amount' => ($product->get_price() + (round($product->get_price() * $this->handling_fee / 100, 2)))*$item->get_quantity(),
+							'CashAmount' => $product->get_price()*$item->get_quantity(),
 							'Quantity' => $item->get_quantity()
 						)
 					);
