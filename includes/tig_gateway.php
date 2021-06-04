@@ -48,13 +48,13 @@ function init_terabank_installments_class()
 			$this->min_amount = $this->get_option('min_amount');
 			$this->max_amount = $this->get_option('max_amount');
 			$this->handling_fee = $this->get_option('handling_fee');
-			$this->request_url = ($this->testmode == 'yes') ? 'https://test01.terabank.ge/CustomerOnBoarding.Retail.Api/api/UserSessions/AddStoreProducts' : 'https://online.terabank.ge/CustomerOnBoardingApi/api/UserSessions/AddStoreProducts';
-			$this->redirect_url = ($this->testmode == 'yes') ? 'https://test01.terabank.ge/customer-on-boarding/installments/products/' : 'https://online.terabank.ge/installments/products/';
+			$this->request_url = ($this->testmode) ? 'https://test01.terabank.ge/CustomerOnBoarding.Retail.Api/api/UserSessions/AddStoreProducts' : 'https://online.terabank.ge/CustomerOnBoardingApi/api/UserSessions/AddStoreProducts';
+			$this->redirect_url = ($this->testmode) ? 'https://test01.terabank.ge/customer-on-boarding/installments/products/' : 'https://online.terabank.ge/installments/products/';
 		}
 
 		private function check_preconditions()
 		{
-			if ($this->testmode == 'yes') {
+			if ($this->testmode) {
 				if (!empty($this->testmerchantid) && filter_var($this->min_amount, FILTER_VALIDATE_FLOAT) && $this->min_amount >= 0 && filter_var($this->max_amount, FILTER_VALIDATE_FLOAT) && $this->max_amount > $this->min_amount) {
 					return true;
 				}
@@ -135,7 +135,7 @@ function init_terabank_installments_class()
 
 			$request = array(
 				'Culture' => 'ka',
-				'StoreId' => ($this->testmode == 'yes') ? $this->testmerchantid : $this->realmerchantid,
+				'StoreId' => ($this->testmode) ? $this->testmerchantid : $this->realmerchantid,
 				'OrderId' => $order_id,
 				'Products' => $arr
 			);
